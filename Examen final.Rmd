@@ -1,0 +1,38 @@
+---
+title: "Examen final"
+output: github_document
+---
+# importar la base de datos
+```{r}
+library(readxl)
+datos<- read_excel("D:/disco c/Documents/motosR.xlsx")
+
+```
+# TIPIFICACION O ESTANDARIZACION DE VARIABLES
+```{r}
+datost<-datos
+
+datost<-scale(datost, center = T, scale = T)
+datost<-as.data.frame(datost)
+
+```
+
+# NORMALIDAD MULTIVARIANTE  
+H0: Normalidad Multivariante  
+H1: No Normalidad multivariante  
+Confianza=95%  
+Alfa=5% = 0.05  
+P value > alfa no se rechaza la H0(Normalidad)  
+P value < alfa se rechaza la H0( No normalidad)  
+
+
+```{r}
+library(MVN)
+mvn(datost[2:7])
+```
+
+
+
+
+
+
