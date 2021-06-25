@@ -31,8 +31,65 @@ library(MVN)
 mvn(datost[2:7])
 ```
 
+# MATRIX DE CORRELACION
 
+```{r}
+library(psych)
+corr.test(datost[,2:7])
+correlaciones<-corr.test(datost[,2:7])
+correlaciones$r
+r<-as.matrix(correlaciones$r)
+```
 
+# INDICADORES DE APLICABILIDAD DE AFE (BONDAD DEL AJUSTE)  
+## CONTRASTE DE ESFERIDAD DE BARTLETT  
+H0: Las correlaciones teoricas entre cada par de variable es nulo  
+H1: las correlaciones teoricas entre cada par de variable no es nulo  
+alfa= 0.05
+  
+P value > alfa: no se aplica el AFE( No se rechaza H0)  
+p value < alfa: si se aplica el AFE( se rechaza H0)
+```{r}
+dim(datost)
+
+cortest.bartlett(r, n= 30)
+
+```
+
+## MEDIDAS DE ADECUACION MUESTRAL DE KAYSER, MEYER Y OKLIN (KMO)
+```{r}
+KMO(r)
+```
+
+# METODOS DE EXTRACCION DE FACTORES 
+## METODO DE LOS ANALISIS DE LOS COMPONENTES (ACP)
+
+```{r}
+library(psych)
+acp<-principal(r, nfactors = 1, rotate = "none")
+acp
+```
+# METODOS DE LOS EJES PRINCIPALES (CPI)
+```{r}
+cpi<- fa(r, nfactors = 1, fm= "pa", rotate = "none", n.obs = 30)
+cpi
+```
+# METODO DE MAXIMA VEROSIMILIITUD (MVE)
+```{r}
+mve<- fa(r, nfactors = 1, fm= "ml", rotate = "none", n.obs = 30)
+mve
+```
+
+# REPRESENTACION GRAFICA DE LOS FACTORES EXTRAIDOS  
+## ACP
+## CPI
+## MVE
+
+# solo se grafica cuando hay 2 factores a extraer,por lo cual no se puede hacer ya que solo extrajimos 1.
+```{r}
+plot(acp,labels = row.names(r), cex=.7 ,ylim=c(-.8,.8))
+
+```
 
 
 
